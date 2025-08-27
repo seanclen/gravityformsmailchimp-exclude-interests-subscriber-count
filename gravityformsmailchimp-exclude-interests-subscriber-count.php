@@ -33,7 +33,6 @@ class GF_Mailchimp_Exclude_Interests_Subscriber_Count {
      * Filter the Mailchimp API request to exclude interests subscriber count
      */
     public function exclude_interests_subscriber_count( $pre, $args, $url ) {
-
         // Skip cron requests
         if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
             return $pre;
@@ -70,3 +69,8 @@ class GF_Mailchimp_Exclude_Interests_Subscriber_Count {
         return $pre;
     }
 }
+
+/**
+ * Instantiate the plugin class
+ */
+new GF_Mailchimp_Exclude_Interests_Subscriber_Count();
