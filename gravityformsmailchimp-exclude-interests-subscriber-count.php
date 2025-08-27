@@ -14,9 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
-// If Gravity Forms is loaded, bootstrap the plugin
-add_action( 'gform_loaded', array( 'GF_Mailchimp_Exclude_Interests_Subscriber_Count', 'load' ), 5 );
-
 /**
  * Class GF_Mailchimp_Exclude_Interests_Subscriber_Count
  *
@@ -24,10 +21,11 @@ add_action( 'gform_loaded', array( 'GF_Mailchimp_Exclude_Interests_Subscriber_Co
  */
 class GF_Mailchimp_Exclude_Interests_Subscriber_Count {
 
-    /**
-     * Load the plugin filters
-     */
-    public static function load() {
+    public function __construct() {
+        add_action( 'gform_loaded', array( $this, 'enable_hooks' ) );
+    }
+
+    public function enable_hooks() {
         add_filter( 'pre_http_request', array( $this, 'exclude_interests_subscriber_count' ), 10, 3 );
     }
 
@@ -35,6 +33,12 @@ class GF_Mailchimp_Exclude_Interests_Subscriber_Count {
      * Filter the Mailchimp API request to exclude interests subscriber count
      */
     public function exclude_interests_subscriber_count( $pre, $args, $url ) {
+
+        // Skip cron requests
+        if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
+            return $pre;
+        }
+
         // Check if the request is to the Mailchimp API and contains the interest-categories parameter
         if ( strpos( $url, 'api.mailchimp.com/3.0/lists/' ) !== false && strpos( $url, 'interest-categories' ) !== false ) {
             // Decode the URL to manipulate query parameters
