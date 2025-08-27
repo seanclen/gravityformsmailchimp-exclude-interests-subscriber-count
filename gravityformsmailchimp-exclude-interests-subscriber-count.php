@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     Gravity Forms Mailchimp Add-On: Exclude Interests Subscriber Count
- * Plugin URI:      PLUGIN SITE HERE
+ * Plugin URI:      https://github.com/seanclen/gravityformsmailchimp-exclude-interests-subscriber-count
  * Description:     Exclude interests subscriber count from merge tags. This is useful if your Audience size is large and you want to speed up Mailchimp API requests.
  * Author:          Sean Clendening
  * Text Domain:     gravityformsmailchimp-exclude-interests-subscriber-count
